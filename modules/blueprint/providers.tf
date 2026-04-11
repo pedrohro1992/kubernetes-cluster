@@ -1,0 +1,22 @@
+provider "kind" {}
+
+provider "helm" {
+  kubernetes = {
+    host                   = module.cluster_kind[0].endpoint
+    client_certificate     = base64decode(module.cluster_kind[0].client_certificate)
+    client_key             = base64decode(module.cluster_kind[0].client_key)
+    cluster_ca_certificate = base64decode(module.cluster_kind[0].cluster_ca_certificate)
+  }
+}
+
+provider "kubernetes" {
+  host                   = module.cluster_kind[0].endpoint
+  client_certificate     = base64decode(module.cluster_kind[0].client_certificate)
+  client_key             = base64decode(module.cluster_kind[0].client_key)
+  cluster_ca_certificate = base64decode(module.cluster_kind[0].cluster_ca_certificate)
+}
+
+# Values to access vault is passed by the env vars VAULT_ADDR and VAULT_TOKEN
+provider "vault" {
+
+}
