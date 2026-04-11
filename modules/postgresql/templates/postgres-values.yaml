@@ -1,0 +1,17 @@
+global:
+  postgresql:
+    auth:
+      postgresPassword: "${postgres_password}"
+      database: "vault_db"
+
+primary:
+  persistence:
+    enabled: ${persistence_enabled}
+    size: "8Gi"
+  resources:
+    requests:
+      cpu: "250m"
+      memory: "256Mi"
+    limits:
+      cpu: "500m"
+      memory: "512Mi"
