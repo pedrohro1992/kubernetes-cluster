@@ -26,34 +26,24 @@ module "homelab_infra_services" {
   nodes = [
     {
       role           = "control-plane"
-      enable_storage = false
+      enable_storage = true
       labels = {
         ingress-ready = "true"
         platform      = "true"
+        storage       = "enabled"
       }
     },
     {
       role           = "worker"
-      enable_storage = true
+      enable_storage = false
       labels = {
         workload = "general"
         tier     = "application"
-        storage  = "enabled"
       }
     },
     {
       role           = "worker"
-      enable_storage = true
-      labels = {
-        workload = "general"
-        tier     = "application"
-        storage  = "enabled"
-
-      }
-    },
-    {
-      role           = "worker"
-      enable_storage = true
+      enable_storage = false
       labels = {
         workload = "general"
         tier     = "application"
@@ -67,15 +57,7 @@ module "homelab_infra_services" {
       labels = {
         workload = "general"
         tier     = "application"
-
-      }
-    },
-    {
-      role           = "worker"
-      enable_storage = false
-      labels = {
-        workload = "general"
-        tier     = "application"
+        storage  = "enabled"
 
       }
     },
