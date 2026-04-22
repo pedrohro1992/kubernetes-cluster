@@ -39,3 +39,9 @@ module "platform_operator" {
 
   depends_on = [module.open_ebs_storage]
 }
+
+module "cloudnative_pg" {
+  source = "../cloudnative-pg"
+
+  depends_on = [module.platform_operator]
+}

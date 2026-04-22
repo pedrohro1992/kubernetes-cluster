@@ -1,0 +1,28 @@
+# Configuração para Homelab (Recursos reduzidos)
+resources:
+  requests:
+    cpu: "100m"
+    memory: "128Mi"
+  limits:
+    cpu: "500m"
+    memory: "512Mi"
+
+# Seleção de nós específicos
+nodeSelector:
+  platform: "true"
+  storage: "enabled"
+
+# Configuração de Storage baseada no seu cluster
+storageClass: "openebs-local"
+
+# Monitoramento básico
+monitoring:
+  enablePodMonitor: false
+
+tolerations:
+  - key: "node-role.kubernetes.io/control-plane"
+    operator: "Exists"
+    effect: "NoSchedule"
+  - key: "node-role.kubernetes.io/master"
+    operator: "Exists"
+    effect: "NoSchedule"
