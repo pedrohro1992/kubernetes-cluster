@@ -1,0 +1,7 @@
+manager:
+  replicas: ${replicas}
+  
+  image:
+    repository: "${repository}"
+    tag: "${tag}"
+    pullPolicy: "IfNotPresent"

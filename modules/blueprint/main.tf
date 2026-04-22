@@ -33,3 +33,9 @@ module "open_ebs_storage" {
 
   depends_on = [module.calico_network]
 }
+
+module "platform_operator" {
+  source = "../platform-operator"
+
+  depends_on = [module.open_ebs_storage]
+}
