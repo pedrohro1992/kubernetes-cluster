@@ -34,14 +34,33 @@ module "open_ebs_storage" {
   depends_on = [module.calico_network]
 }
 
+module "cloudnative_pg" {
+  source = "../cloudnative-pg"
+
+  depends_on = [module.open_ebs_storage]
+}
+
 module "platform_operator" {
   source = "../platform-operator"
 
   depends_on = [module.open_ebs_storage]
 }
 
-module "cloudnative_pg" {
-  source = "../cloudnative-pg"
+#TODO: Add the ingress controller instalation
+
+
+module "vault" {
+  source = "../vault"
 
   depends_on = [module.platform_operator]
 }
+
+module "external_secrets_operator" {
+  source = "../external-secrets-operator"
+
+  depends_on = [module.vault]
+}
+
+
+
+

@@ -2,7 +2,7 @@ resource "helm_release" "platform_operator" {
   name             = "platform-operator"
   repository       = "oci://registry-1.docker.io/opedroramos"
   chart            = "platform-operator"
-  version          = "0.1.0"
+  version          = "2.0.2"
   namespace        = "platform-system"
   create_namespace = true
 
@@ -13,7 +13,7 @@ resource "helm_release" "platform_operator" {
     templatefile("${path.module}/templates/operator-values.yaml", {
       replicas   = var.operator_replicas
       repository = "opedroramos/platform-operator"
-      tag        = "1.0"
+      tag        = "2.0"
     })
   ]
 }
