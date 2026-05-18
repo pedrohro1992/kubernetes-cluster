@@ -1,0 +1,12 @@
+manager:
+  replicas: ${replicas}
+
+  image:
+    repository: "${repository}"
+    tag: "${tag}"
+    pullPolicy: "IfNotPresent"
+
+  env:
+    VAULT_ADDR: "${vault_addr}"
+    VAULT_AUTH_KUBERNETES_ROLE: "${vault_kubernetes_role}"
+    VAULT_AUTH_KUBERNETES_MOUNT: "kubernetes"

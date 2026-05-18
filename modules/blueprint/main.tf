@@ -9,23 +9,12 @@ module "cluster_kind" {
   create_cluster_storage = var.create_cluster_storage
 }
 
-module "coredns_cm" {
-  source = "../coredns-config"
-
-  cluster_name        = var.cluster_name
-  coredns_forward_ip  = var.coredns_forward_ip
-  coredns_custom_zone = var.coredns_custom_zone
-
-  depends_on = [module.cluster_kind]
-
-}
-
 module "calico_network" {
   source = "../calico"
 
   cluster_provider = var.cluster_provider
 
-  depends_on = [module.coredns_cm]
+  depends_on = [module.cluster_kind]
 }
 
 module "open_ebs_storage" {
@@ -34,33 +23,36 @@ module "open_ebs_storage" {
   depends_on = [module.calico_network]
 }
 
-module "cloudnative_pg" {
-  source = "../cloudnative-pg"
+module "vaultreaver" {
+  source = "../vaultweaver"
 
-  depends_on = [module.open_ebs_storage]
+  cluster_name       = var.cluster_name
+  kubernetes_ca_cert = base64decode(module.cluster_kind[0].cluster_ca_certificate)
+
+  vault_addr = "http://172.18.0.12:8200"
+
 }
 
-module "platform_operator" {
-  source = "../platform-operator"
+# module "cloudnative_pg" {
+#   source = "../cloudnative-pg"
+#
+#   depends_on = [module.open_ebs_storage]
+# }
+#
+# module "vault" {
+#   source = "../vault"
+#
+#   depends_on = [module.cloudnative_pg]
+# }
 
-  depends_on = [module.open_ebs_storage]
-}
+# module "external_secrets_operator" {
+#   source = "../external-secrets-operator"
+#
+#   depends_on = [module.vault]
+# }
 
-#TODO: Add the ingress controller instalation
-
-
-module "vault" {
-  source = "../vault"
-
-  depends_on = [module.platform_operator]
-}
-
-module "external_secrets_operator" {
-  source = "../external-secrets-operator"
-
-  depends_on = [module.vault]
-}
-
-
-
-
+# module "platform_operator" {
+#   source = "../platform-operator"
+#
+#   depends_on = [module.open_ebs_storage]
+# }

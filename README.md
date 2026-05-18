@@ -96,7 +96,10 @@ Ensure you have the following installed on your local machine:
 │   ├── kind/                        # Kind cluster & host storage logic
 │   ├── open-ebs/                    # Local Persistent Volumes
 │   ├── platform-operator/           # Custom CRDs
-│   └── vault/                       # Vault Helm deployment
+│   ├── postgresql/                  # PostgreSQL deployment
+│   ├── ingress-nginx/               # Ingress Controller
+│   ├── external-secrets-operator/   # External Secrets synchronization
+│   └── vaultweaver/                 # Vault Policy & Role Operator
 └── README.md
 ```
 
